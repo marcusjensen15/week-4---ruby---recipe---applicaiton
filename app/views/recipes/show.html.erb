@@ -1,0 +1,50 @@
+<h1><%= @recipe.name %></h1>
+
+<p><%= @recipe.description %></p>
+
+
+<h2>Ingredients for this recipe</h2>
+<% if @recipe.ingredients.any? %>
+<%  @recipe.ingredients.each do |ingredient| %>
+
+   <p><%= link_to ingredient.name, ingredient_path(ingredient.id) %></p>
+
+
+<%  end %>
+<%  else %>
+<p>There are no ingrediernts for this recipe yet</p>
+
+<%  end %>
+
+<h2>Tags for this recipe</h2>
+<% if @recipe.tags.any? %>
+<%  @recipe.tags.each do |tag| %>
+
+   <p><%=  link_to tag.name, tag_path(tag.id) %></p>
+
+
+<%  end %>
+<%  else %>
+<p>There are no Tags for this recipe yet</p>
+
+<%  end %>
+<% if @ingredients.any? %>
+<%= form_for "ingredient", :url => {:action => "add"} do |f| %>
+<%= f.submit "Add Ingredient" %>
+<%= f.select :ingredient, @ingredients %>
+<%  end %>
+<%  end %>
+
+<% if @tags.any? %>
+<%= form_for "tag", :url => {:action => "add"} do |f| %>
+<%= f.submit "Add Tag" %>
+<%= f.select :tag, @tags %>
+<%  end %>
+<%  end %>
+
+<p><%= link_to "Edit", edit_recipe_path(@recipe) %></p>
+<p><%= link_to "Delete", recipe_path(@recipe),
+  :data => {:confirm => "You sure?",
+  :method => "delete"} %></p>
+
+  <p><%= link_to "Return to recipes", root_path %></p>
